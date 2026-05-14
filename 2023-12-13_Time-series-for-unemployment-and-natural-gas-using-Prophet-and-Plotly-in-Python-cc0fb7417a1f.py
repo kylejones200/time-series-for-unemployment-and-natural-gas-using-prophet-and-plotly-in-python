@@ -102,7 +102,7 @@ def timeseries_trad(df,  y, periods = 10, save = False):
     ])
     fig.update_layout(
         yaxis_title='price',
-        title='Henry Hub Natural Gas Spot Price using Prophet Forecast with shift of {}'.format(periods),
+        title=f'Henry Hub Natural Gas Spot Price using Prophet Forecast with shift of {periods}',
         hovermode="x"
     )
     
