@@ -27,7 +27,7 @@ def timeseries(df, x, yhat, lower, upper, actual, save = False):
             x=df[x],
             y=df['yhat'],
             mode='lines',
-            line=dict(color='rgb(31, 119, 180)'),
+            line={"color": 'rgb(31, 119, 180)'},
             showlegend=False
         ),
         go.Scatter(
@@ -35,16 +35,16 @@ def timeseries(df, x, yhat, lower, upper, actual, save = False):
             x=df[x],
             y=df[upper],
             mode='lines',
-            marker=dict(color="#444"),
-            line=dict(width=0),
+            marker={"color": "#444"},
+            line={"width": 0},
             showlegend=False
         ),
         go.Scatter(
             name='Lower Bound',
             x=df[x],
             y=df[lower],
-            marker=dict(color="#444"),
-            line=dict(width=0),
+            marker={"color": "#444"},
+            line={"width": 0},
             mode='lines',
             fillcolor='rgba(68, 68, 68, 0.3)',
             fill='tonexty',
@@ -95,8 +95,8 @@ def timeseries_trad(df,  y, periods = 10, save = False):
             x=shift.index,
             y=shift[y],
             mode='lines',
-            marker=dict(color="#444"),
-            line=dict(width=1),
+            marker={"color": "#444"},
+            line={"width": 1},
             showlegend=False
         ),
     ])
