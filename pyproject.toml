@@ -1,0 +1,14 @@
+[project]
+name = "time-series-for-unemployment-and-natural-gas-using"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "arch>=8.0.0",
+    "matplotlib>=3.10.9",
+    "numpy>=2.4.4",
+    "pandas>=3.0.3",
+    "requests>=2.34.2",
+    "scikit-learn>=1.8.0",
+    "seaborn>=0.13.2",
+    "statsmodels>=0.14.6",
+]
