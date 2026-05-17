@@ -2,6 +2,8 @@
 
 Magics and shell lines are commented out. Run with a normal Python interpreter."""
 
+import warnings
+
 import matplotlib.animation as animation
 import matplotlib.pyplot as plt
 import numpy as np
@@ -228,79 +230,6 @@ def granger_causality(data, max_lag=12):
     return results
 
 
-def main():
-    api_key = "YOUR8f058d10ec8c788296c040ea09e634d5_KEY"
-    gas_data = fetch_fred_data("PNGASUSUSDM", api_key)
-    gas_data = gas_data.set_index("date")
-    data_with_lookahead = create_features_with_lookahead(gas_data.copy())
-    data_proper = create_features_proper(gas_data.copy())
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
-    mape_lookahead, test_dates_look, y_test_look, y_pred_look = evaluate_model(
-        data_with_lookahead,
-        ["future_5day_ma", "future_volatility"],
-        "Model with Lookahead Bias",
-        ax1,
-    )
-    mape_proper, test_dates_prop, y_test_prop, y_pred_prop = evaluate_model(
-        data_proper,
-        ["past_5day_ma", "past_volatility"],
-        "Model without Lookahead Bias",
-        ax2,
-    )
-    plt.tight_layout()
-    plt.show()
-    print(f"MAPE with lookahead bias: {mape_lookahead:.2f}%")
-    print(f"MAPE without lookahead bias: {mape_proper:.2f}%")
-    print(f"Difference in MAPE: {mape_proper - mape_lookahead:.2f}%")
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(15, 10))
-    ax1.plot(test_dates_look, y_test_look, label="Actual Price", alpha=0.7)
-    ax1.plot(
-        test_dates_look, y_pred_look, label="Predicted (with lookahead)", linestyle="--"
-    )
-    ax1.set_title(
-        f"Price Predictions with Lookahead Bias (MAPE: {mape_lookahead:.2f}%)"
-    )
-    ax1.legend()
-    ax2.plot(test_dates_prop, y_test_prop, label="Actual Price", alpha=0.7)
-    ax2.plot(test_dates_prop, y_pred_prop, label="Predicted (proper)", linestyle="--")
-    ax2.set_title(
-        f"Price Predictions without Lookahead Bias (MAPE: {mape_proper:.2f}%)"
-    )
-    ax2.legend()
-    plt.tight_layout()
-    plt.show()
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(15, 10))
-    ax1.plot(gas_data.index, gas_data["value"], label="Price", alpha=0.5)
-    ax1.plot(
-        data_with_lookahead.index,
-        data_with_lookahead["future_5day_ma"],
-        label="5-day MA (with lookahead)",
-        linewidth=2,
-    )
-    ax1.plot(
-        data_proper.index,
-        data_proper["past_5day_ma"],
-        label="5-day MA (proper)",
-        linewidth=2,
-    )
-    ax1.set_title("Price and Moving Averages")
-    ax1.legend()
-    ax2.plot(
-        data_with_lookahead.index,
-        data_with_lookahead["future_volatility"],
-        label="Volatility (with lookahead)",
-        linewidth=2,
-    )
-    ax2.plot(
-        data_proper.index,
-        data_proper["past_volatility"],
-        label="Volatility (proper)",
-        linewidth=2,
-    )
-    ax2.set_title("Volatility Measures")
-    ax2.legend()
-    plt.tight_layout()
-    plt.show()
 
 
 def mape(y_true, y_pred):
@@ -458,16 +387,20 @@ def train_model(data, features, target="value"):
     return (test_data.index, y_test, y_pred)
 
 
-def main() -> None:
-    main()
 
-    main()
 
-    main()
 
-    main()
 
+
+
+
+
+def notebook_step_006() -> None:
     create_volatility_animation(volatility_df)
+
+
+def create_sample_time_series_data() -> None:
+    warnings.filterwarnings("ignore")
 
     np.random.seed(42)
 
@@ -492,6 +425,10 @@ def main() -> None:
     print(f"MSE with proper handling: {proper_mse:.2f}")
 
     print(f"Difference in MSE: {proper_mse - leakage_mse:.2f}")
+
+
+def create_sample_time_series_data_2() -> None:
+    warnings.filterwarnings("ignore")
 
     np.random.seed(42)
 
@@ -595,6 +532,8 @@ def main() -> None:
 
     print(f"Difference in MSE: {mse_proper - mse_leak:.2f}")
 
+
+def create_synthetic_stock_data() -> None:
     np.random.seed(42)
 
     dates = pd.date_range(start="2024-01-01", end="2024-12-31", freq="D")
@@ -682,11 +621,15 @@ def main() -> None:
 
     plt.show()
 
-    main()
 
-    main()
 
-    main()
+
+
+
+
+
+def fetch_japan_natural_gas_price_data() -> None:
+    warnings.filterwarnings("ignore")
 
     api_key = "8f058d10ec8c788296c040ea09e634d5"
 
@@ -807,6 +750,10 @@ def main() -> None:
     plt.tight_layout()
 
     plt.show()
+
+
+def fetch_japan_natural_gas_price_data_2() -> None:
+    warnings.filterwarnings("ignore")
 
     api_key = "8f058d10ec8c788296c040ea09e634d5"
 
@@ -1014,9 +961,9 @@ def main() -> None:
 
     plt.show()
 
-    main()
 
-    main()
+def fetch_japan_natural_gas_price_data_3() -> None:
+    warnings.filterwarnings("ignore")
 
     api_key = "8f058d10ec8c788296c040ea09e634d5"
 
@@ -1195,6 +1142,16 @@ def main() -> None:
     print(f"MAPE without lookahead bias: {mape_proper:.2f}%")
 
     print(f"Difference in MAPE: {mape_proper - mape_leak:.2f}%")
+
+
+def main() -> None:
+    notebook_step_006()
+    create_sample_time_series_data()
+    create_sample_time_series_data_2()
+    create_synthetic_stock_data()
+    fetch_japan_natural_gas_price_data()
+    fetch_japan_natural_gas_price_data_2()
+    fetch_japan_natural_gas_price_data_3()
 
 
 if __name__ == "__main__":
