@@ -613,7 +613,6 @@ create_volatility_animation(volatility_df)
 
 # --- code cell ---
 
-import warnings
 
 import numpy as np
 import pandas as pd
@@ -621,7 +620,6 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 
-warnings.filterwarnings("ignore")
 
 # Create sample time series data
 np.random.seed(42)
@@ -692,7 +690,6 @@ print(f"Difference in MSE: {proper_mse - leakage_mse:.2f}")
 
 # --- code cell ---
 
-import warnings
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -702,7 +699,6 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 
-warnings.filterwarnings("ignore")
 
 # Create sample time series data
 np.random.seed(42)
@@ -1497,7 +1493,6 @@ if __name__ == "__main__":
 
 # --- code cell ---
 
-import warnings
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -1506,7 +1501,6 @@ import requests
 import seaborn as sns
 from sklearn.linear_model import LinearRegression
 
-warnings.filterwarnings("ignore")
 
 
 def fetch_fred_data(series_id, api_key, start_date="2000-01-01"):
@@ -1668,7 +1662,6 @@ plt.show()
 
 # --- code cell ---
 
-import warnings
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -1677,7 +1670,6 @@ import requests
 import seaborn as sns
 from sklearn.linear_model import LinearRegression
 
-warnings.filterwarnings("ignore")
 
 
 def fetch_fred_data(series_id, api_key, start_date="2000-01-01"):
@@ -1898,7 +1890,6 @@ plt.show()
 
 # --- code cell ---
 
-import warnings
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -1908,7 +1899,6 @@ import seaborn as sns
 from sklearn.linear_model import LinearRegression
 from statsmodels.tsa.stattools import grangercausalitytests
 
-warnings.filterwarnings("ignore")
 
 
 def fetch_fred_data(series_id, api_key, start_date="2000-01-01"):
@@ -2281,7 +2271,6 @@ if __name__ == "__main__":
 
 # --- code cell ---
 
-import warnings
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -2289,7 +2278,6 @@ import pandas as pd
 import requests
 from sklearn.linear_model import LinearRegression
 
-warnings.filterwarnings("ignore")
 
 
 def fetch_fred_data(series_id, api_key, start_date="2000-01-01"):
