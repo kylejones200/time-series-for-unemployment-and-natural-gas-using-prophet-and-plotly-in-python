@@ -1,16 +1,16 @@
 """Auto-split from legacy monolithic script."""
 
 import warnings
+
 import matplotlib.animation as animation
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import requests
 import seaborn as sns
 from arch import arch_model
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error
 from statsmodels.tsa.stattools import grangercausalitytests
+
 
 def analyze_correlations(df, split_date="2020-01-01"):
     before_2020 = df[df.index < split_date].corr()
@@ -136,22 +136,23 @@ def evaluate_model(data, features):
     return (test_data.index, y_test, y_pred)
 
 
-def fetch_fred_data(series_id, api_key, start_date="2000-01-01"):
-    """Fetch data from FRED API"""
-    url = "https://api.stlouisfed.org/fred/series/observations"
-    params = {
-        "series_id": series_id,
-        "api_key": api_key,
-        "file_type": "json",
-        "observation_start": start_date,
-    }
-    response = requests.get(url, params=params)
-    if response.status_code == 200:
-        data = response.json()
-        df = pd.DataFrame(data["observations"])
-        df["date"] = pd.to_datetime(df["date"])
-        df["value"] = pd.to_numeric(df["value"], errors="coerce")
-        return df
+def fetch_fred_data(series_id, start_date="2000-01-01", end_date=None):
+    """Fetch data from FRED via pandas_datareader."""
+    from datetime import datetime
+
+    import pandas_datareader.data as web
+
+    if end_date is None:
+        end_date = datetime.now()
+    start = pd.to_datetime(start_date)
+    end = pd.to_datetime(end_date)
+    raw = web.DataReader(series_id, "fred", start, end)
+    df = raw.reset_index()
+    date_col = "DATE" if "DATE" in df.columns else df.columns[0]
+    value_col = series_id if series_id in df.columns else df.columns[-1]
+    out = df.rename(columns={date_col: "date", value_col: "value"})
+    out["value"] = pd.to_numeric(out["value"], errors="coerce")
+    return out.dropna(subset=["value"])
 
 
 def granger_causality(data, max_lag=12):
@@ -176,7 +177,7 @@ def mape(y_true, y_pred):
 
 def plot_correlations_and_scatter(data):
     corr = data.corr()
-    fig = plt.figure(figsize=(15, 10))
+    plt.figure(figsize=(15, 10))
     ax1 = plt.subplot2grid((2, 3), (0, 0), colspan=2)
     sns.heatmap(corr, annot=True, cmap="coolwarm", center=0, ax=ax1)
     ax1.set_title("Correlation Heatmap")
@@ -330,11 +331,8 @@ def notebook_step_006() -> None:
 
 def create_sample_time_series_data() -> None:
     warnings.filterwarnings("ignore")
-
     np.random.seed(42)
-
     dates = pd.date_range(start="2024-01-01", end="2024-12-31", freq="D")
-
     data = pd.DataFrame(
         {
             "date": dates,
@@ -342,17 +340,11 @@ def create_sample_time_series_data() -> None:
             "feature1": np.random.normal(50, 5, len(dates)),
         }
     )
-
     data["rolling_mean"] = data["target"].rolling(window=7, center=True).mean()
-
     leakage_mse = demonstrate_leakage()
-
     proper_mse = demonstrate_proper_handling()
-
     print(f"MSE with data leakage: {leakage_mse:.2f}")
-
     print(f"MSE with proper handling: {proper_mse:.2f}")
-
     print(f"Difference in MSE: {proper_mse - leakage_mse:.2f}")
 
 
@@ -364,4 +356,3 @@ def main() -> None:
     fetch_japan_natural_gas_price_data()
     fetch_japan_natural_gas_price_data_2()
     fetch_japan_natural_gas_price_data_3()
-

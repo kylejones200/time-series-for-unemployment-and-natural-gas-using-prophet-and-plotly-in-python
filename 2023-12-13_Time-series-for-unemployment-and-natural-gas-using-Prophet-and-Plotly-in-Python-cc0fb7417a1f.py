@@ -1,6 +1,5 @@
 # Description: Short example for Time series for unemployment and natural gas using Prophet and Plotly in Python.
 
-
 import plotly.graph_objs as go
 
 df.plot()
@@ -67,7 +66,6 @@ def timeseries(df, x, yhat, lower, upper, actual, save=False):
         )
     )
     fig.show()
-
     if save:
         fig.write_html("unemployment rate.html")
 
@@ -115,9 +113,7 @@ def timeseries_trad(df, y, periods=10, save=False):
         title=f"Henry Hub Natural Gas Spot Price using Prophet Forecast with shift of {periods}",
         hovermode="x",
     )
-
     fig.show()
-
     if save:
         fig.write_html("timeseries_trad.html")
 

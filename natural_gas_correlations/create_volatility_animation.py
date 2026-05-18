@@ -1,16 +1,8 @@
 """Auto-split from legacy monolithic script."""
 
-import warnings
 import matplotlib.animation as animation
 import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-import requests
-import seaborn as sns
-from arch import arch_model
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error
-from statsmodels.tsa.stattools import grangercausalitytests
+
 
 def create_volatility_animation(volatility_df):
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 10))
@@ -67,4 +59,3 @@ def create_volatility_animation(volatility_df):
     print("\nScale Ranges:")
     print(f"Rolling Volatility: {rolling_min:.4f} to {rolling_max:.4f}")
     print(f"GARCH Volatility: {garch_min:.4f} to {garch_max:.4f}")
-
